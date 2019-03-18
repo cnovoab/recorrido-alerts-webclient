@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Router, Switch, Route} from 'react-router-dom';
+import { Reminder } from './reminders/reminder.component';
+import { AddReminder } from './reminders/addreminder.component'
+import { ShowReminder } from './reminders/showreminder.component'
+import { Login } from './login/';
+import { Home } from './home/';
+import { history } from './_helpers';
+import { PrivateRoute } from './_components';
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Router history={history}>
+          <div>
+              <Switch>
+                <PrivateRoute exact path='/home' component={Home} />
+                <PrivateRoute exact path='/reminder' component={Reminder} />
+                <PrivateRoute exact path='/add-reminder' component={AddReminder} />
+                <PrivateRoute exact path='/edit-reminder/:id' component={AddReminder} />
+                <PrivateRoute exact path='/show-reminder/:id' component={ShowReminder} />
+                <Route exact path='/' component={Login} />
+              </Switch>
+          </div>
+        </Router>
       </div>
     );
   }
